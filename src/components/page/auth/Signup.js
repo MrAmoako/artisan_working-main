@@ -33,6 +33,7 @@ const SignUp = () => {
   const [job, setJob] = useState('');
   const [number, setNumber] = useState('');
   const [description, setDescription] = useState('');
+  const [otherJobs, setOtherJobs] = useState('');
   const [error, setError] = useState(null);
 
   const handleSignUp = async () => {
@@ -57,6 +58,7 @@ const SignUp = () => {
         password: password,
         description: description,
         number: number,
+        otherJobs: otherJobs,
       });
 
       console.log('User signed up successfully:', user);
@@ -117,11 +119,22 @@ const SignUp = () => {
             onChange={(e) => setAge(e.target.value)}
             className="col-span-2 px-4 py-2 rounded-md border-gray-300 focus:outline-none focus:border-blue-500"
           />
-          <input
-            type="text"
-            placeholder="Artisan/Job"
+      
+          <select
             value={job}
             onChange={(e) => setJob(e.target.value)}
+            className="col-span-2 px-4 py-2 rounded-md border-gray-300 focus:outline-none focus:border-blue-500"
+          >
+            <option value="" disabled>Select Job</option>
+            <option value="Carpenter">Carpenter</option>
+            <option value="Plumber">Plumber</option>
+            <option value="Mason">Mason</option>
+          </select>
+          <input
+            type="text"
+            placeholder="other jobs"
+            value={otherJobs}
+            onChange={(e) => setOtherJobs(e.target.value)}
             className="col-span-2 px-4 py-2 rounded-md border-gray-300 focus:outline-none focus:border-blue-500"
           />
           <input
