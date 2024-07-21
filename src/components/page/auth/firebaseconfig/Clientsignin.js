@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { auth } from './firebase';
 import { useNavigate } from 'react-router-dom';
+import backgroundImage from '../../../images/back3.jpg';
 
 const ClientLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [resetMessage, setResetMessage] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -20,11 +22,25 @@ const ClientLogin = () => {
     }
   };
 
+  const handlePasswordReset = async () => {
+    if (!email) {
+      setError('Please enter your email to reset password');
+      return;
+    }
+    try {
+      await auth.sendPasswordResetEmail(email);
+      setResetMessage('Password reset email sent successfully');
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
-    <div className="flex h-screen justify-center items-center">
+    <div className="flex h-screen justify-center items-center" style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
       <form onSubmit={handleLogin} className="w-1/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+          <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
             Email
           </label>
           <input
@@ -50,12 +66,22 @@ const ClientLogin = () => {
           />
         </div>
         {error && <p className="text-red-500 text-xs italic">{error}</p>}
+        {resetMessage && <p className="text-green-500 text-xs italic">{resetMessage}</p>}
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
             type="submit"
           >
             Sign In
+          </button>
+        </div>
+        <div className="flex items-center justify-between mt-4">
+          <button
+            type="button"
+            className="text-blue-500 hover:text-blue-700 text-sm focus:outline-none focus:underline"
+            onClick={handlePasswordReset}
+          >
+            Forgot Password?
           </button>
         </div>
       </form>

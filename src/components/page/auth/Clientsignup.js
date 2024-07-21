@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import backgroundImage from '../../images/back2.jpg';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -54,7 +55,7 @@ const ClientSignUp = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen " style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover' }}>
       <div className="w-full max-w-md p-6 rounded-lg bg-white pt-[40px]">
         <h2 className="text-2xl font-bold mb-4">Sign Up</h2>
         {error && <p className="text-red-500 text-xs italic mb-4">{error}</p>}
